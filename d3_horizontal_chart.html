@@ -85,6 +85,7 @@
             .rangeRoundBands([height, 0], .1)
             .domain(data.map(function (d) {
                 return d.County;
+                return d.webflow_dashboard_url;
             }));
 
         //make y axis to show bar names
@@ -102,6 +103,10 @@
             .data(data)
             .enter()
             .append("g")
+            .attr("onclick", function (d) {
+                return "javascript:window.location.href='" + d.webflow_dashboard_url + "'; return false;";
+            });
+            //.attr("onclick",5)
 
         //append rects
         bars.append("rect")
@@ -115,7 +120,8 @@
             .attr("ry", 16)            
             .attr("width", function (d) {
                 return x(d.Cases);
-            });
+            })
+
 
         //add a value label to the right of each bar
         bars.append("text")
