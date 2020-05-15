@@ -49,39 +49,13 @@
         //     console.log(data2);
         // });
 
+        // loading data inline
 
-        var data = [{
-                "name": "Apples",
-                "value": 20,
-        },
-            {
-                "name": "Bananas",
-                "value": 12,
-        },
-            {
-                "name": "Grapes",
-                "value": 19,
-        },
-            {
-                "name": "Lemons",
-                "value": 5,
-        },
-            {
-                "name": "Limes",
-                "value": 16,
-        },
-            {
-                "name": "Oranges",
-                "value": 26,
-        },
-            {
-                "name": "Pears",
-                "value": 30,
-        }];
+        var data = [{"County":"Forest","Percent Change":2.000000,"Cases":3,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/forest-county-wi"},{"County":"Hamilton","Percent Change":1.250000,"Cases":18,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/hamilton-county-fl"},{"County":"Sioux","Percent Change":1.000000,"Cases":84,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/sioux-county-ia"},{"County":"Independence","Percent Change":0.416667,"Cases":17,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/independence-county-ar"},{"County":"Medina","Percent Change":0.409091,"Cases":31,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/medina-county-tx"},{"County":"Pennington","Percent Change":0.368421,"Cases":26,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/pennington-county-sd"},{"County":"Jackson","Percent Change":0.333333,"Cases":4,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/jackson-county-ks"},{"County":"Geneva","Percent Change":0.307692,"Cases":17,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/geneva-county-al"},{"County":"Fayette","Percent Change":0.285714,"Cases":9,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/fayette-county-al"},{"County":"Deaf Smith","Percent Change":0.282609,"Cases":59,"webflow_dashboard_url":"https://www.covidmappingproject.com/counties/deaf-smith-county-tx"}]
 
         //sort bars based on value
         data = data.sort(function (a, b) {
-            return d3.ascending(a.value, b.value);
+            return d3.ascending(a.Cases, b.Cases);
         })
 
         //set up svg using margin conventions - we'll need plenty of room on the left for labels
@@ -104,13 +78,13 @@
         var x = d3.scale.linear()
             .range([0, width])
             .domain([0, d3.max(data, function (d) {
-                return d.value;
+                return d.Cases;
             })]);
 
         var y = d3.scale.ordinal()
             .rangeRoundBands([height, 0], .1)
             .domain(data.map(function (d) {
-                return d.name;
+                return d.County;
             }));
 
         //make y axis to show bar names
@@ -133,12 +107,12 @@
         bars.append("rect")
             .attr("class", "bar")
             .attr("y", function (d) {
-                return y(d.name);
+                return y(d.County);
             })
             .attr("height", y.rangeBand())
             .attr("x", 0)
             .attr("width", function (d) {
-                return x(d.value);
+                return x(d.Cases);
             });
 
         //add a value label to the right of each bar
@@ -146,14 +120,14 @@
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
-                return y(d.name) + y.rangeBand() / 2 + 4;
+                return y(d.County) + y.rangeBand() / 2 + 4;
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", function (d) {
-                return x(d.value) + 3;
+                return x(d.Cases) + 3;
             })
             .text(function (d) {
-                return d.value;
+                return d.Cases;
             });
         
     </script>
